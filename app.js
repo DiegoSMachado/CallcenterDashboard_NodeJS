@@ -33,7 +33,7 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
-
+app.get('/', function(req, res) {res.render('index')});
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
