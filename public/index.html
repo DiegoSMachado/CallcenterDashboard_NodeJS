@@ -206,7 +206,8 @@
   <h1>Testando os Gráficos</h1>
   <label for="Selecione o cidadão">Selecione o cidadão</label>
   <select id="Filtro" onchange="filtrando()"></select>
-  <input id="BtLimpar" type="submit" accesskey="d" onclick="history.go(0)" value="&#xE716">
+  <input id="BtLimpar" type="submit" accesskey="d" onclick="history.go(0)" value="Limpar">
+  <h6>Ctrl + alt + d para Limpar os filtros</h6>
   <hr />
   <div id="gauge"   style="width: 30%; position:relative; float:left; height:150px;"></div>
   <div id="tabela"  style="width: 16%; position:relative; float:left; height:150px; padding-left: 3%;"></div>
@@ -216,6 +217,7 @@
   <div id="scatter" style="width: 50%; position:relative; float:left;"></div>
   <div id="bubble"  style="width: 50%; position:relative; float:left;"></div>
   <div id="map"     style="width: 50%; position:relative; float:left;"></div>
+  <i class="glyphicon glyphicon-floppy-disk">
  </form>
 </body>
 </html>
@@ -226,14 +228,14 @@
  // Reconstrói somente os gráficos não alterando o Dropbox
  function filtrando() {
   $.ajax({
-   type: 'POST',
+   type: 'GET',
    dataType: 'json',
    contentType: 'application/json',
-   url: 'Default.aspx/GetDadosGrafico',
+   url: '/api/v1/dados',
    data: '{}',
    success:
        function (response) {
-        drawchart(response.d);
+        drawchart(response);
        }
   })
  }
