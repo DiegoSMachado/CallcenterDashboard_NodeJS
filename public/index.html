@@ -16,14 +16,12 @@
  <script type="text/javascript">
   // Resgata a informação POST em formato Json e depois chama a função drawComboBox e drawChart
   $(function () {
-   $.ajax({ type: 'POST', 
-   			contentType: 'application/json',
-   			url: 'api/v1/dados',
-   			data: {}, 
-   	success:
+   $.ajax({ type: 'GET', dataType: 'json', url: '/api/v1/dados',data:'{}',
+     success:
     function (response) {
-      drawCombobox(response.d);
-      drawchart(response.d);
+      var dataValues = response;
+      drawCombobox(response);
+      drawchart(response);
     },
     error:
      function () {
@@ -34,7 +32,6 @@
   
   //Função Contrói os gráficos
   function drawchart(dataValues) {
-
    // --- Gráfico Coluna -------------------------
    // Popula Dados ao Google DataTable
    var data = new google.visualization.DataTable();
@@ -44,8 +41,8 @@
    //O loop adiciona cada linha da tabela
    for (var i = 0; i < dataValues.length; i++) {
     //condição SE verifica qual dropbox esta selecionado no momento
-    if (dataValues[i].NomePais.trim() == Filtro.value.trim() || Filtro.value.trim() == "todos") {
-     data.addRow([dataValues[i].NomePais, dataValues[i].Total]);
+    if (dataValues[i].nome.trim() == Filtro.value.trim() || Filtro.value.trim() == 'todos') {
+     data.addRow([dataValues[i].nome.trim(), dataValues[i].total]);
     } else {}
    }
    // Monta a visualização do Google Chart Gauge
@@ -58,10 +55,10 @@
    // Popula Dados ao Google DataTable
    var data2 = new google.visualization.DataTable();
    // Construção das colunas do DataTable
-   data2.addColumn('number', dataValues[1].NomePais);
-   data2.addColumn('number', dataValues[2].NomePais);
-   data2.addColumn('number', dataValues[3].NomePais);
-   data2.addRow([dataValues[1].Total, dataValues[2].Total, dataValues[3].Total]);
+   data2.addColumn('number', dataValues[1].nome);
+   data2.addColumn('number', dataValues[2].nome);
+   data2.addColumn('number', dataValues[3].nome);
+   data2.addRow([dataValues[1].total, dataValues[2].total, dataValues[3].total]);
    var gaugeOptions = { min: 0, max: 100, yellowFrom: 60, yellowTo: 90, redFrom: 90, redTo: 100, minorTicks: 5 };
    // Monta a visualização do Google Chart Gauge
    var grafico2;
@@ -77,8 +74,8 @@
    //O loop adiciona cada linha da tabela
    for (var i = 0; i < dataValues.length; i++) {
     //condição SE verifica qual dropbox esta selecionado no momento
-    if (dataValues[i].NomePais.trim() == Filtro.value.trim() || Filtro.value.trim() == "todos") {
-     data3.addRow([dataValues[i].NomePais, dataValues[i].Total]);
+    if (dataValues[i].nome.trim() == Filtro.value.trim() || Filtro.value.trim() == "todos") {
+     data3.addRow([dataValues[i].nome, dataValues[i].total]);
     } else { }
    }
    // Monta a visualização do Google Chart LineChart
@@ -96,8 +93,8 @@
    //O loop adiciona cada linha da tabela
    for (var i = 0; i < dataValues.length; i++) {
     //condição SE verifica qual dropbox esta selecionado no momento
-    if (dataValues[i].NomePais.trim() == Filtro.value.trim() || Filtro.value.trim() == "todos") {
-     data4.addRow([dataValues[i].NomePais, dataValues[i].Total]);
+    if (dataValues[i].nome.trim() == Filtro.value.trim() || Filtro.value.trim() == "todos") {
+     data4.addRow([dataValues[i].nome, dataValues[i].total]);
     } else { }
    }
    // Monta a visualização do Google Chart Pie
@@ -116,8 +113,8 @@
    //O loop adiciona cada linha da tabela
    for (var i = 0; i < dataValues.length; i++) {
     //condição SE verifica qual dropbox esta selecionado no momento
-    if (dataValues[i].NomePais.trim() == Filtro.value.trim() || Filtro.value.trim() == "todos") {
-     data5.addRow([dataValues[i].NomePais, dataValues[i].Total, dataValues[i].Idade]);
+    if (dataValues[i].nome.trim() == Filtro.value.trim() || Filtro.value.trim() == "todos") {
+     data5.addRow([dataValues[i].nome, dataValues[i].total, dataValues[i].idade]);
     } else { }
    }
    // Monta a visualização do Google Tabela
@@ -135,8 +132,8 @@
    //O loop adiciona cada linha da tabela
    for (var i = 0; i < dataValues.length; i++) {
     //condição SE verifica qual dropbox esta selecionado no momento
-    if (dataValues[i].NomePais.trim() == Filtro.value.trim() || Filtro.value.trim() == "todos") {
-     data6.addRow([dataValues[i].Total, dataValues[i].Idade]);
+    if (dataValues[i].nome.trim() == Filtro.value.trim() || Filtro.value.trim() == "todos") {
+     data6.addRow([dataValues[i].total, dataValues[i].idade]);
     } else { }
    }
    // Monta a visualização do Google Chart Scatter
@@ -156,8 +153,8 @@
    //O loop adiciona cada linha da tabela
    for (var i = 0; i < dataValues.length; i++) {
     //condição SE verifica qual dropbox esta selecionado no momento
-    if (dataValues[i].NomePais.trim() == Filtro.value.trim() || Filtro.value.trim() == "todos") {
-     data7.addRow([dataValues[i].NomePais, dataValues[i].Total, dataValues[i].Idade]);
+    if (dataValues[i].nome.trim() == Filtro.value.trim() || Filtro.value.trim() == "todos") {
+     data7.addRow([dataValues[i].nome, dataValues[i].total, dataValues[i].idade]);
     } else { }
    }
    // Monta o visualização do Google Chart Bubble
@@ -177,7 +174,7 @@
    //O loop adiciona cada linha da tabela
    for (var i = 0; i < dataValues.length; i++) {
     //condição SE verifica qual dropbox esta selecionado no momento
-    if (dataValues[i].NomePais.trim() == Filtro.value.trim() || Filtro.value.trim() == "todos") {
+    if (dataValues[i].nome.trim() == Filtro.value.trim() || Filtro.value.trim() == "todos") {
      data8.addRow([dataValues[i].Latitude, dataValues[i].Longitude, dataValues[i].Nome]);
     } else { }
    }
@@ -196,7 +193,7 @@
    var complHtml = '<option value="todos"></option> \n'
    //O loop monta as tags com a informação nome do banco
    for (var i = 0; i < dataValues.length; i++) {
-    var montaHtml = '<option value="' + dataValues[i].NomePais.trim() + '">' + dataValues[i].NomePais.trim() + '</option> \n';
+    var montaHtml = '<option value="' + dataValues[i].nome.trim() + '">' + dataValues[i].nome.trim() + '</option> \n';
     var complHtml = complHtml + montaHtml;
    }
    // A ID Filtro referente ao Select recebe todas as tags Option dentro dela

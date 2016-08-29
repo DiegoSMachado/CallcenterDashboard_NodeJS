@@ -8,6 +8,7 @@ var connectionString = process.env.DATABASE_URL || 'postgreSQL://localhost:5432/
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
+  res.sendFile(path.join(__dirname, '../public', 'index.html'))
 });
 
 module.exports = router;
@@ -39,6 +40,7 @@ router.get('/api/v1/dados', function(req, res) {
         query.on('end', function() {
             done();
             return res.json(results);
+            alert('fudeu');
         });
 
     });
